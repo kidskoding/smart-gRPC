@@ -1,0 +1,17 @@
+syntax = "proto3";
+package sentinel;
+
+service SmartSentinel {
+  rpc Inspect (TransactionRequest) returns (Decision);
+}
+
+message TransactionRequest {
+  string amount = 1;
+  string merchant = 2;
+  string user_id = 3;
+}
+
+message AgentDecision {
+  bool allowed = 1;
+  string reasoning = 2;
+}

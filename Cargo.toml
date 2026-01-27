@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+prost = "0.14.3"
+rig-core = "0.29.0"
+rig-vertexai = "0.2.4"
+serde = { version = "1.0.228", features = ["derive"] }
+tokio = { version = "1.49.0", features = ["full"] }
+tonic = { version = "0.14.2", features = ["tls-native-roots", "tls-ring"] }
+
+[build-dependencies]
+tonic-build = "0.14.2"
