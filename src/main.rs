@@ -10,8 +10,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
     let ai_client = rig_vertexai::Client::from_env();
 
-    let addr = "[::1]:50051".parse()?;
+    let addr = "[::1]:8000".parse()?;
     let sentinel = MySentinel { ai_client };
+
+    println!("gRPC server starting at [::1]:8000!");
 
     Server::builder()
         .add_service(SmartSentinelServer::new(sentinel))

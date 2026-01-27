@@ -6,9 +6,12 @@ service SmartSentinel {
 }
 
 message TransactionRequest {
-  string amount = 1;
-  string merchant = 2;
-  string user_id = 3;
+    string user_id = 1;
+    double amount = 2;
+    string merchant = 3;
+    string currency = 4;
+    string location = 5;
+    int32 user_account_age = 6;
 }
 
 message AgentDecision {
