@@ -1,13 +1,9 @@
-pub mod sentinel {
-    tonic::include_proto!("sentinel");
-}
-
 use rig::completion::Prompt;
 use rig::prelude::*;
 
 use rig_vertexai::completion::GEMINI_2_5_PRO;
-use sentinel::smart_sentinel_server::{SmartSentinel};
-use sentinel::{TransactionRequest, AgentDecision};
+use crate::proto::smart_sentinel_server::SmartSentinel;
+use crate::proto::{TransactionRequest, AgentDecision};
 
 use tonic::{Request, Response, Status};
 

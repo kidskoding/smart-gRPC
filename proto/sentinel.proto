@@ -15,6 +15,6 @@ message TransactionRequest {
 }
 
 message AgentDecision {
-  bool allowed = 1;
-  string reasoning = 2;
+    bool allowed = 1;
+    string reasoning = 2;
 }

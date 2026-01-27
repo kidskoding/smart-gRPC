@@ -4,16 +4,19 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-color-eyre = "0.6.5"
-prost = "0.14.3"
+dotenvy = "0.15.7"
 serde = { version = "1.0.228", features = ["derive"] }
 tokio = { version = "1.49.0", features = ["full"] }
-tonic = { version = "0.14.2", features = ["tls-native-roots", "tls-ring"] }
-tonic-prost = "0.14.2"
 
+# Tonic
+tonic = { version = "0.14.2", features = ["tls-native-roots", "tls-ring"] }
+prost = "0.14.3"
+tonic-prost = "0.14.2"
+tonic-reflection = "0.14.2"
+
+# Rig
 rig-core = "0.29.0"
 rig-vertexai = "0.2.4"
-dotenvy = "0.15.7"
 
 [build-dependencies]
 tonic-prost-build = "0.14.2"
