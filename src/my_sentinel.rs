@@ -1,26 +1,31 @@
+use rig::client::CompletionClient;
 use rig::completion::Prompt;
-use rig::prelude::*;
+use rig::embeddings::EmbeddingModel;
+use rig::providers::openai::{self, GPT_4O, EmbeddingModel as OpenAIEmbeddingModel};
+use rig::vector_store::VectorStoreIndex;
 
-use rig_vertexai::completion::GEMINI_2_5_PRO;
 use crate::proto::smart_sentinel_server::SmartSentinel;
 use crate::proto::{TransactionRequest, AgentDecision};
 
 use tonic::{Request, Response, Status};
 
 #[derive(Clone)]
-pub struct MySentinel {
-    pub ai_client: rig_vertexai::Client,
+pub struct MySentinel<M: EmbeddingModel + Clone + Send + Sync + 'static> {
+    pub openai_client: openai::Client,
+    pub policy_index: VectorStoreIndex<M>,
 }
 
 #[tonic::async_trait]
-impl SmartSentinel for MySentinel {
+impl<M> SmartSentinel for MySentinel<M> {
     async fn inspect(&self, request: Request<TransactionRequest>) -> Result<Response<AgentDecision>, tonic::Status> {
         let tx = request.into_inner();
-        let agent = self.ai_client
-            .agent(GEMINI_2_5_PRO)
+
+        let agent = self.openai_client
+            .agent(GPT_4O)
             .preamble("You are a banking security sentinel. 
                 Policy: Transactions over $1000 are denied for new users.
                 Policy: Deny transactions for gambling or crypto merchants.")
+            .dynamic_context(2, self.policy_index.clone())
             .max_tokens(1024)
             .build();
 

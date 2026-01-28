@@ -16,7 +16,8 @@ tonic-reflection = "0.14.2"
 
 # Rig
 rig-core = "0.29.0"
-rig-vertexai = "0.2.4"
+rig-qdrant = "0.1.35"
+qdrant-client = "1.16.0"
 
 [build-dependencies]
 tonic-prost-build = "0.14.2"
