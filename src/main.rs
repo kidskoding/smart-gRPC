@@ -1,4 +1,6 @@
 use dotenvy::dotenv;
+use rig::client::ProviderClient;
+use rig::providers::openai;
 use tonic::transport::Server;
 use tonic_reflection::server::Builder;
 
@@ -9,10 +11,11 @@ use smart_gRPC::proto;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
-    let ai_client = rig_vertexai::Client::from_env();
+
+    let openai_client = openai::Client::from_env();
 
     let addr = "[::1]:8000".parse()?;
-    let sentinel = MySentinel { ai_client };
+    let sentinel = MySentinel { openai_client };
 
     println!("gRPC server starting at [::1]:8000!");
 
